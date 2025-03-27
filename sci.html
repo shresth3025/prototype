@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureTalk - Is This a Scam?</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fc;
+      color: #333;
+    }
+
+    header {
+      background-color: #2d3748;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #f9b300;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+
+    #input-section, #result-section {
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea:focus {
+      border-color: #2d3748;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      background-color: #2d3748;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #f9b300;
+    }
+
+    #result-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #result-section ul li {
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    #result-section .scam-score {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    #result-section .safe {
+      color: #38a169;
+    }
+
+    #result-section .suspicious {
+      color: #e53e3e;
+    }
+
+    #result-section .scam {
+      color: #e53e3e;
+    }
+
+    footer {
+      background-color: #2d3748;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      main {
+        flex-direction: column;
+        height: auto;
+      }
+
+      #input-section, #result-section {
+        width: 90%;
+        padding: 30px;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>SecureTalk</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/faq">FAQs</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section id="input-section">
+      <h2>Check if your message is a scam!</h2>
+      <textarea id="user-message" placeholder="Paste your message here..."></textarea>
+      <button onclick="checkMessage()">Check Message</button>
+    </section>
+    
+    <!-- Result Section -->
+    <section id="result-section" style="display:none;">
+      <h2>Analysis Result</h2>
+      <p><strong>Scam Score:</strong> <span id="scam-score">N/A</span></p>
+      <p><strong>Analysis:</strong></p>
+      <ul id="analysis-details"></ul>
+      <button onclick="resetCheck()">Check Another Message</button>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 SecureTalk. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function checkMessage() {
+      const message = document.getElementById("user-message").value;
+
+      // Here we generate a random scam score and corresponding details
+      const scamResult = analyzeMessage(message);
+
+      document.getElementById("scam-score").textContent = scamResult.score;
+      document.getElementById("analysis-details").innerHTML = scamResult.details.map(item => `<li>${item}</li>`).join('');
+
+      // Display result and hide input
+      document.getElementById("input-section").style.display = "none";
+      document.getElementById("result-section").style.display = "block";
+    }
+
+    function analyzeMessage(message) {
+      // Random scam score between 0 and 100
+      const score = Math.floor(Math.random() * 101);
+      let details = [];
+
+      // Add analysis details based on the score
+      if (score > 80) {
+        details = [
+          "Urgent request for personal information",
+          "Contains suspicious link (e.g. www.fake-link.com)",
+          "Promises large financial reward or prize"
+        ];
+      } else if (score > 50) {
+        details = [
+          "Asks for payment or donation urgently",
+          "Contains poorly written grammar or spelling mistakes",
+          "Suspicious sender address"
+        ];
+      } else {
+        details = [
+          "Looks like a regular message",
+          "No major red flags detected"
+        ];
+      }
+
+      return {
+        score: score,
+        details: details
+      };
+    }
+
+    function resetCheck() {
+      // Reset to the initial state
+      document.getElementById("input-section").style.display = "block";
+      document.getElementById("result-section").style.display = "none";
+      document.getElementById("user-message").value = '';
+    }
+  </script>
+</body>
+</html>
